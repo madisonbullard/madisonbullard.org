@@ -11,6 +11,9 @@ module.exports = {
     path: './dist',
     filename: 'index_bundle.js'
   },
+  devServer: {
+    port: 3000
+  },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
