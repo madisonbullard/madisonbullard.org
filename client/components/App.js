@@ -17,24 +17,11 @@ const BodyDiv = withTheme(styled('div')`
   display: grid;
   width: 100%;
   height: 100%;
-  & h1{
-    text-align: left;
-    white-space: pre-wrap;
-    font-size: ${props => props.theme.h1Size}vw;
-    line-height: 0;
-    font-family: Gandur;
-    font-weight: normal;
-    margin: 15vh auto;
-    grid-area: 1 / 1 / -1 / -1;
-  }
 `)
 
 const ContainerDiv = styled('div')`
   display: grid;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  width: 350px;
+  width: 100%;
   height: 100%;
   margin: 0 auto;
   grid-area: 1 / 1 / -1 / -1;
@@ -64,12 +51,11 @@ class App extends Component {
     return(
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={this._onMouseMove.bind(this)}>
-          <h1>Madison Bullard</h1>
           <ContainerDiv>
-            <AboutPanel />
+            <AboutPanel counter={this.state.counter}/>
             <VideoPlayer url="reel" />
           </ContainerDiv>
-          <BackgroundSpin mouseCoordinates={[this.state.x, this.state.y]} counter={this.state.counter}/>
+          <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>
       </ThemeProvider>
     )
@@ -95,7 +81,6 @@ injectGlobal`
       "Apple Color Emoji",
       "Segoe UI Emoji",
       "Segoe UI Symbol";
-    color: #495057;
     width: 100%;
     height: 100%;
     padding: 0;
