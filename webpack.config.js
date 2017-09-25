@@ -12,14 +12,15 @@ module.exports = {
     filename: 'index_bundle.js'
   },
   devServer: {
-    hot: true,
+    inline: true,
     open: true,
     port: 3000
   },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(png|jpg)$/, loader: 'url?limit=25000', exclude: /node_modules/ }
     ]
   },
   plugins: [HtmlWebpackPluginConfig]
