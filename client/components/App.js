@@ -10,7 +10,7 @@ import VideoPlayer from './video_player';
 // let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 // console.log(w);
 const theme = {
-  h1Size: 20,
+  color: "#F7F878"
 };
 
 const BodyDiv = withTheme(styled('div')`
@@ -30,7 +30,7 @@ const ContainerDiv = styled('div')`
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0, counter: 0};
+    this.state = { x: 0, y: 0, counter: 0 };
   } 
 
   _onMouseMove(e) {
@@ -38,7 +38,7 @@ class App extends Component {
     this.setState((prevState, props) => {
       const { x, y } = this.state;
       const increment = Math.abs(e.screenX-prevState.x) + Math.abs(e.screenY-prevState.y);
-      const rate = 0.2;
+      const rate = 0.4;
       return ({
         counter: (prevState.counter+increment*rate)%360,
         x: e.screenX, 
