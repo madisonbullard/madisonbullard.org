@@ -4,13 +4,14 @@ import { injectGlobal, fontFace } from 'emotion';
 import { ThemeProvider, withTheme } from 'theming';
 
 import BackgroundSpin from './background_spin';
+import Slider from './slider';
 import AboutPanel from './about_panel';
 import VideoPlayer from './video_player';
+import EmailBar from './email_bar';
 
-// let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-// console.log(w);
 const theme = {
-  color: "#F7F878"
+  color: "#F7F878",
+  emailBarHeight: 90
 };
 
 const BodyDiv = withTheme(styled('div')`
@@ -20,11 +21,24 @@ const BodyDiv = withTheme(styled('div')`
 `)
 
 const ContainerDiv = styled('div')`
-  display: grid;
+  grid-area: 1 / 1 / -1 / -1;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  grid-area: 1 / 1 / -1 / -1;
+  font-family: Krungthep;
+  & h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 96px;
+    font-family: Gandur;
+    font-weight: normal;
+    margin: 0;
+    color: ${props => theme.color};
+    background-color: #777;
+    @media (max-width: 515px) {
+      font-size: 18vw;
+    }
+  }
 `
 
 class App extends Component {
@@ -52,8 +66,12 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={this._onMouseMove.bind(this)}>
           <ContainerDiv>
-            <AboutPanel counter={this.state.counter}/>
-            <VideoPlayer url="reel" />
+            <h1>Madison Bullard</h1>
+            <Slider>
+              <AboutPanel counter={this.state.counter}/>
+              <VideoPlayer url="reel" />
+            </Slider>
+            <EmailBar counter={this.state.counter}/>
           </ContainerDiv>
           <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>
@@ -86,6 +104,7 @@ injectGlobal`
     padding: 0;
     margin: 0;
     line-height: 1.5;
+    font-size: 16px;
   }
   html {
     -webkit-box-sizing: border-box;
