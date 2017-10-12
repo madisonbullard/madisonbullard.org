@@ -9,6 +9,9 @@ const EmailButton = withTheme(styled('button')`
   }
 	width: 100%;
 	height: ${props => props.theme.emailBarHeight}px;
+	@media (max-width: 414px) {
+		height: 75px;
+  }
 	background: ${props => props.theme.color};
 	border: 0;
 	font-family: Krungthep;

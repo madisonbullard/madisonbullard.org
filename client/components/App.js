@@ -24,6 +24,9 @@ const ContainerDiv = styled('div')`
   grid-area: 1 / 1 / -1 / -1;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0 auto;
   font-family: Krungthep;
   & h1 {
@@ -35,17 +38,55 @@ const ContainerDiv = styled('div')`
     margin: 0;
     color: ${props => theme.color};
     background-color: #777;
-    @media (max-width: 515px) {
-      font-size: 18vw;
+    @media (max-width: 475px) {
+      font-size: 15vw;
     }
   }
 `
+  const myTimer = () => {
+    
+  }
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0, counter: 0 };
-  } 
+    this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth };
+    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
+    this.timer = this.timer.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentDidMount() {
+    this.checkMobile();   
+    const intervalId = setInterval(this.timer, 1000/60);
+    // store intervalId in the state so it can be accessed later:
+    this.setState({intervalId: intervalId})
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+    clearInterval(this.state.intervalId);
+  }
+
+  handleWindowSizeChange() {
+    this.setState({ width: window.innerWidth })
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    const { width } = this.state;
+    if (width <= 500){
+      this.setState({isMobile: true})
+      // store intervalId in the state so it can be accessed later:
+    }else{
+      this.setState({isMobile: false})
+      clearInterval(this.state.intervalId)
+      console.log('clearInterval')
+    }
+  }
 
   _onMouseMove(e) {
     e.persist();
@@ -61,19 +102,42 @@ class App extends Component {
     })
   }
 
+  timer() {
+    this.setState({ counter: (this.state.counter+4)%360 });
+  }
+
   render(){
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    // console.log('mobile', isMobile)
+
+    // const t1 = this.timer(1000/60, function(){
+    //   this.setState(prevState => {
+    //     return ({      
+    //       counter: (prevState.counter+0.5)%360
+    //     })
+    //   })
+    // }.bind(this))
+
+    // isMobile ? t1.start() : t1.clear()
+
+    let counter = () => {
+      return this.state.counter 
+    }
+    // console.log(counter())
+
     return(
       <ThemeProvider theme={theme}>
-        <BodyDiv onMouseMove={this._onMouseMove.bind(this)}>
+        <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
           <ContainerDiv>
             <h1>Madison Bullard</h1>
             <Slider>
-              <AboutPanel counter={this.state.counter}/>
+              <AboutPanel counter={counter()}/>
               <VideoPlayer url="reel" />
             </Slider>
-            <EmailBar counter={this.state.counter}/>
+            <EmailBar counter={counter()}/>
           </ContainerDiv>
-          <BackgroundSpin counter={this.state.counter}/>
+          <BackgroundSpin counter={counter()}/>
         </BodyDiv>
       </ThemeProvider>
     )
