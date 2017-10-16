@@ -14,6 +14,10 @@ const theme = {
   emailBarHeight: 90
 };
 
+const getValue = (prop) => {
+  return this.props[prop]
+}
+
 const BodyDiv = withTheme(styled('div')`
   display: grid;
   width: 100%;
@@ -39,18 +43,18 @@ const ContainerDiv = styled('div')`
     color: ${props => theme.color};
     background-color: #777;
     @media (max-width: 475px) {
-      font-size: 15vw;
+      font-size: 12.6vw;
+    }
+    @media (orientation: landscape) {
+      font-size: 4rem;
     }
   }
 `
-  const myTimer = () => {
-    
-  }
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth };
+    this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth, height: window.innerHeight };
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.timer = this.timer.bind(this);
   }
@@ -60,15 +64,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.checkMobile();   
-    const intervalId = setInterval(this.timer, 1000/60);
-    // store intervalId in the state so it can be accessed later:
-    this.setState({intervalId: intervalId})
+    this.checkMobile();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.isMobile!==this.state.isMobile) {
+      if (nextState.isMobile) {
+        const intervalId = setInterval(this.timer, 1000/60);
+        console.log('intervalId', intervalId, 'set')
+        // store intervalId in the state so it can be accessed later:
+        this.setState({intervalId: intervalId})
+      } else {
+        clearInterval(this.state.intervalId);
+        console.log('intervalId', this.state.intervalId, 'cleared')
+      }
+    }
   }
   
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
-    clearInterval(this.state.intervalId);
+    // clearInterval(this.state.intervalId);
   }
 
   handleWindowSizeChange() {
@@ -83,8 +98,8 @@ class App extends Component {
       // store intervalId in the state so it can be accessed later:
     }else{
       this.setState({isMobile: false})
-      clearInterval(this.state.intervalId)
-      console.log('clearInterval')
+      // clearInterval(this.state.intervalId)
+      // console.log('clearInterval')
     }
   }
 
@@ -106,38 +121,38 @@ class App extends Component {
     this.setState({ counter: (this.state.counter+4)%360 });
   }
 
+
+  _onEmailClick(e) {
+    e.persist();
+    e.preventDefault();
+    const copyTextareaBtn = document.querySelector('.js-textareacopybtn');
+    const copyTextarea = document.querySelector('.js-copytextarea');
+    copyTextarea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+      let msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
+  }
+
   render(){
     const { width } = this.state;
     const isMobile = width <= 500;
-    // console.log('mobile', isMobile)
-
-    // const t1 = this.timer(1000/60, function(){
-    //   this.setState(prevState => {
-    //     return ({      
-    //       counter: (prevState.counter+0.5)%360
-    //     })
-    //   })
-    // }.bind(this))
-
-    // isMobile ? t1.start() : t1.clear()
-
-    let counter = () => {
-      return this.state.counter 
-    }
-    // console.log(counter())
-
     return(
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
           <ContainerDiv>
             <h1>Madison Bullard</h1>
             <Slider>
-              <AboutPanel counter={counter()}/>
+              <AboutPanel counter={this.state.counter} width={this.state.width} height={this.state.height}/>
               <VideoPlayer url="reel" />
             </Slider>
-            <EmailBar counter={counter()}/>
+            <EmailBar counter={this.state.counter}/>
           </ContainerDiv>
-          <BackgroundSpin counter={counter()}/>
+          <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>
       </ThemeProvider>
     )

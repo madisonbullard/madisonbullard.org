@@ -4,13 +4,19 @@ import { withTheme } from 'theming';
 
 const EmailButton = withTheme(styled('button')`
 	font-size: 5vw;
-	@media (min-width: 900px) {
+	@media (min-width: 900px) not (orientation: landscape) {
 		font-size: 2.4rem;
   }
 	width: 100%;
 	height: ${props => props.theme.emailBarHeight}px;
 	@media (max-width: 414px) {
 		height: 75px;
+  }
+	@media (orientation: landscape) {
+		margin: 0 auto 30px;
+		width: 500px;
+		height: 75px;
+		font-size: 1.6rem;
   }
 	background: ${props => props.theme.color};
 	border: 0;

@@ -7,8 +7,11 @@ const AboutPanelDiv = withTheme(styled('div')`
 	margin: 0 auto;
 	padding: 10px 30px;
 	& p, button {
-		font-size: 5vw;
-		@media (min-width: 750px) {
+		font-size: 4.8vw;
+		@media (orientation: landscape) {
+			font-size: 2rem;
+	  }
+		@media (min-width: 900px) not (orientation: landscape) {
 			font-size: 2.4rem;
 	  }
 	}
