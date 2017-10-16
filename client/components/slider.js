@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 
-const Slider = (props) => {
+const Slider = ({children}) => {
 	return(
 		<div>
-			{props.children}
+			{children}
 		</div>
 	)
 }

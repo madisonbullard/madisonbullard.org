@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'react-emotion';
 import { injectGlobal, fontFace } from 'emotion';
 import { ThemeProvider, withTheme } from 'theming';
+import detectIt from 'detect-it';
 
 import BackgroundSpin from './background_spin';
 import Slider from './slider';
@@ -13,10 +14,6 @@ const theme = {
   color: "#F7F878",
   emailBarHeight: 90
 };
-
-const getValue = (prop) => {
-  return this.props[prop]
-}
 
 const BodyDiv = withTheme(styled('div')`
   display: grid;
@@ -55,12 +52,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth, height: window.innerHeight };
-    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.timer = this.timer.bind(this);
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
   componentDidMount() {
@@ -82,24 +74,14 @@ class App extends Component {
   }
   
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-    // clearInterval(this.state.intervalId);
-  }
-
-  handleWindowSizeChange() {
-    this.setState({ width: window.innerWidth })
-    this.checkMobile();
+    clearInterval(this.state.intervalId);
   }
 
   checkMobile() {
-    const { width } = this.state;
-    if (width <= 500){
-      this.setState({isMobile: true})
-      // store intervalId in the state so it can be accessed later:
-    }else{
+    if (detectIt.hasMouse){
       this.setState({isMobile: false})
-      // clearInterval(this.state.intervalId)
-      // console.log('clearInterval')
+    }else{
+      this.setState({isMobile: true})
     }
   }
 
@@ -121,8 +103,7 @@ class App extends Component {
     this.setState({ counter: (this.state.counter+4)%360 });
   }
 
-
-  _onEmailClick(e) {
+  copyStrToClipboard(e, str) {
     e.persist();
     e.preventDefault();
     const copyTextareaBtn = document.querySelector('.js-textareacopybtn');
@@ -139,18 +120,17 @@ class App extends Component {
   }
 
   render(){
-    const { width } = this.state;
-    const isMobile = width <= 500;
+    const { isMobile } = this.state;
     return(
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
           <ContainerDiv>
             <h1>Madison Bullard</h1>
             <Slider>
-              <AboutPanel counter={this.state.counter} width={this.state.width} height={this.state.height}/>
+              <AboutPanel counter={this.state.counter}/>
               <VideoPlayer url="reel" />
             </Slider>
-            <EmailBar counter={this.state.counter}/>
+            <EmailBar counter={this.state.counter} onClick={this.copyStrToClipboard.bind(this)}/>
           </ContainerDiv>
           <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>

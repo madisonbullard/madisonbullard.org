@@ -6,16 +6,14 @@ const AboutPanelDiv = withTheme(styled('div')`
 	max-width: 900px;
 	margin: 0 auto;
 	padding: 10px 30px;
-	& p, button {
+	& p {
 		font-size: 4.8vw;
 		@media (orientation: landscape) {
 			font-size: 2rem;
 	  }
-		@media (min-width: 900px) not (orientation: landscape) {
+		@media (min-width: 900px) not (orientation: landscape)  {
 			font-size: 2.4rem;
 	  }
-	}
-	& p {
 		margin: 16px 0;
 		color: #444;
 		& a {
@@ -24,14 +22,6 @@ const AboutPanelDiv = withTheme(styled('div')`
 				color: #111;
 			}
 		}
-	}
-	& button {
-		width: 400px;
-		height: 90px;
-		background: ${props => props.theme.color};
-		border: 0;
-		font-family: Krungthep;
-		color: #111;
 	}
 `)
 
