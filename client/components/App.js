@@ -33,12 +33,12 @@ const ContainerDiv = styled('div')`
   & h1 {
     text-align: center;
     width: 100%;
-    font-size: 96px;
     font-family: Gandur;
     font-weight: normal;
     margin: 0;
     color: ${props => theme.color};
     background-color: #777;
+    font-size: 96px;
     @media (max-width: 475px) {
       font-size: 12.6vw;
     }
@@ -52,7 +52,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth, height: window.innerHeight };
-    this.timer = this.timer.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +61,7 @@ class App extends Component {
   componentWillUpdate(nextProps, nextState) {
     if (nextState.isMobile!==this.state.isMobile) {
       if (nextState.isMobile) {
-        const intervalId = setInterval(this.timer, 1000/60);
+        const intervalId = setInterval(this.timer.bind(this), 1000/60);
         console.log('intervalId', intervalId, 'set')
         // store intervalId in the state so it can be accessed later:
         this.setState({intervalId: intervalId})
