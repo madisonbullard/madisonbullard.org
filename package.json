@@ -25,6 +25,7 @@
     "detect-it": "^3.0.3",
     "emotion": "^7.3.2",
     "react": "^15.4.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.4.1",
     "react-emotion": "^7.3.2",
     "react-slick": "^0.15.4",

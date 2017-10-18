@@ -12,7 +12,7 @@ import EmailBar from './email_bar';
 
 const theme = {
   color: "#F7F878",
-  emailBarHeight: 90
+  emailBarHeight: 75
 };
 
 const BodyDiv = withTheme(styled('div')`
@@ -44,6 +44,26 @@ const ContainerDiv = styled('div')`
     }
     @media (orientation: landscape) {
       font-size: 4rem;
+    }
+  }
+  & p {
+    font-size: 2.8vmin;
+    @media (max-width: 1200px) {
+      font-size: 2.8vmax;
+    }
+    @media (max-width: 900px) {
+      font-size: 4.7vw;
+    }
+    @media (max-height: 520px) {
+      font-size: 4vw;
+    }
+    margin: 16px 0;
+    color: #444;
+    & a {
+      color: #333;
+      &:hover{
+        color: #111;
+      }
     }
   }
 `
@@ -102,22 +122,6 @@ class App extends Component {
     this.setState({ counter: (this.state.counter+4)%360 });
   }
 
-  copyStrToClipboard(e, str) {
-    e.persist();
-    e.preventDefault();
-    const copyTextareaBtn = document.querySelector('.js-textareacopybtn');
-    const copyTextarea = document.querySelector('.js-copytextarea');
-    copyTextarea.select();
-
-    try {
-      const successful = document.execCommand('copy');
-      let msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Copying text command was ' + msg);
-    } catch (err) {
-      console.log('Oops, unable to copy');
-    }
-  }
-
   render(){
     const { isMobile } = this.state;
     return(
@@ -129,7 +133,7 @@ class App extends Component {
               <AboutPanel counter={this.state.counter}/>
               <VideoPlayer url="reel" />
             </Slider>
-            <EmailBar counter={this.state.counter} onClick={this.copyStrToClipboard.bind(this)}/>
+            <EmailBar counter={this.state.counter}/>
           </ContainerDiv>
           <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>
