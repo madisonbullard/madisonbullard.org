@@ -24,6 +24,7 @@
     "babel-plugin-emotion": "^7.3.2",
     "detect-it": "^3.0.3",
     "emotion": "^7.3.2",
+    "emotion-theming": "^8.0.7",
     "react": "^15.4.1",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.4.1",

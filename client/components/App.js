@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 import { injectGlobal, fontFace } from 'emotion';
-import { ThemeProvider, withTheme } from 'theming';
+import { ThemeProvider, withTheme } from 'emotion-theming';
 import detectIt from 'detect-it';
 
 import BackgroundSpin from './background_spin';
-import Slider from './slider';
 import AboutPanel from './about_panel';
 import VideoPlayer from './video_player';
 import EmailBar from './email_bar';
 
 const theme = {
   color: "#F7F878",
-  emailBarHeight: 75
+  colorSelected: "#B0FE33",
+  emailBarHeight: 75,
+  transitionDuration: 180,
+  alertHold: 2000
 };
 
 const BodyDiv = withTheme(styled('div')`
@@ -46,32 +48,37 @@ const ContainerDiv = styled('div')`
       font-size: 4rem;
     }
   }
+`
+
+const CopiedMsgDiv = styled('div')`
   & p {
-    font-size: 2.8vmin;
-    @media (max-width: 1200px) {
-      font-size: 2.8vmax;
+    font-size: 1.8vw;
+    @media (max-width: 475px){
+      font-size: 4.3vw;
     }
-    @media (max-width: 900px) {
-      font-size: 4.7vw;
-    }
-    @media (max-height: 520px) {
-      font-size: 4vw;
-    }
-    margin: 16px 0;
-    color: #444;
-    & a {
-      color: #333;
-      &:hover{
-        color: #111;
-      }
+    @media (orientation: landscape) {
+      font-size: 1.4rem;
     }
   }
+`
+
+const HueFilterSpan = styled('span')`
+  filter: hue-rotate(${props => props.rotAngle}deg);
+  color: red;
+`
+
+const UnderlineSpan = styled('span')`
+  text-decoration: underline;
 `
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { x: 0, y: 0, counter: 0, width: window.innerWidth, height: window.innerHeight };
+    this.state = { 
+      x: 0, y: 0, 
+      copyText: 'madison.bullard@gmail.com',
+      counter: 0
+    };
   }
 
   componentDidMount() {
@@ -123,17 +130,22 @@ class App extends Component {
   }
 
   render(){
-    const { isMobile } = this.state;
+    const { isMobile, copyText, counter } = this.state;
     return(
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
           <ContainerDiv>
             <h1>Madison Bullard</h1>
-            <Slider>
-              <AboutPanel counter={this.state.counter}/>
-              <VideoPlayer url="reel" />
-            </Slider>
-            <EmailBar counter={this.state.counter}/>
+            <AboutPanel counter={counter}/>
+            <VideoPlayer url="reel" />
+            <EmailBar copyText={copyText} theme={theme}>
+              <CopiedMsgDiv>
+                <p>My email (<HueFilterSpan rotAngle={counter+120}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
+              </CopiedMsgDiv>
+              <div>
+                <p><HueFilterSpan rotAngle={counter+120}>👉</HueFilterSpan> I <UnderlineSpan>will</UnderlineSpan> respond to your email <HueFilterSpan rotAngle={counter+240}>👈</HueFilterSpan></p>
+              </div>
+            </EmailBar>
           </ContainerDiv>
           <BackgroundSpin counter={this.state.counter}/>
         </BodyDiv>
@@ -167,6 +179,9 @@ injectGlobal`
     margin: 0;
     line-height: 1.5;
     font-size: 16px;
+    & textarea, input, button { 
+      outline: none; 
+    }
   }
   html {
     -webkit-box-sizing: border-box;

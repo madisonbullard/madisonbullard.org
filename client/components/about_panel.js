@@ -1,11 +1,31 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
-import { withTheme } from 'theming';
+import { withTheme } from 'emotion-theming';
 
 const AboutPanelDiv = withTheme(styled('div')`
 	max-width: 900px;
 	margin: 0 auto;
 	padding: 10px 30px;
+	& p {
+    font-size: 2.8vmin;
+    @media (max-width: 1200px) {
+      font-size: 2.8vmax;
+    }
+    @media (max-width: 900px) {
+      font-size: 4.7vw;
+    }
+    @media (max-height: 520px) {
+      font-size: 4vw;
+    }
+    margin: 16px 0;
+    color: #444;
+    & a {
+      color: #333;
+      &:hover{
+        color: #111;
+      }
+    }
+  }
 `)
 
 const HueFilterSpan = styled('span')`
