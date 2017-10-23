@@ -11,9 +11,9 @@ import EmailBar from './email_bar';
 
 const theme = {
   color: "#F7F878",
-  colorSelected: "#B0FE33",
+  colorSelected: "#D7F2BA",
   emailBarHeight: 75,
-  transitionDuration: 180,
+  transitionDuration: 600,
   alertHold: 2000
 };
 
@@ -52,12 +52,12 @@ const ContainerDiv = styled('div')`
 
 const CopiedMsgDiv = styled('div')`
   & p {
-    font-size: 1.8vw;
+    font-size: 1.3rem;
     @media (max-width: 475px){
       font-size: 4.3vw;
     }
     @media (orientation: landscape) {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
     }
   }
 `
@@ -77,30 +77,9 @@ class App extends Component {
     this.state = { 
       x: 0, y: 0, 
       copyText: 'madison.bullard@gmail.com',
-      counter: 0
+      counter: 0,
+      counterEmail: 0
     };
-  }
-
-  componentDidMount() {
-    this.checkMobile();
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.isMobile!==this.state.isMobile) {
-      if (nextState.isMobile) {
-        const intervalId = setInterval(this.timer.bind(this), 1000/60);
-        console.log('intervalId', intervalId, 'set')
-        // store intervalId in the state so it can be accessed later:
-        this.setState({intervalId: intervalId})
-      } else {
-        clearInterval(this.state.intervalId);
-        console.log('intervalId', this.state.intervalId, 'cleared')
-      }
-    }
-  }
-  
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
   }
 
   checkMobile() {
@@ -110,6 +89,35 @@ class App extends Component {
       this.setState({isMobile: true})
     }
   }
+
+  componentDidMount() {
+    this.checkMobile();
+    setInterval(this.timerEmail.bind(this, 'counterEmail', 16), 1000/60);
+  }
+
+  timer(key, rate) {
+    const obj = {};
+    obj[key] = (this.state[key]+rate)%360;
+    console.log(obj);
+    this.setState(obj);
+  }
+  
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.isMobile!==this.state.isMobile) {
+      if (nextState.isMobile) {
+        const intervalId = setInterval(this.timer.bind(this, 'counter', 4), 1000/60);
+        // store intervalId in the state so it can be accessed later:
+        this.setState({intervalId: intervalId})
+      } else {
+        clearInterval(this.state.intervalId);
+      }
+    }
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
 
   _onMouseMove(e) {
     e.persist();
@@ -125,12 +133,9 @@ class App extends Component {
     })
   }
 
-  timer() {
-    this.setState({ counter: (this.state.counter+4)%360 });
-  }
 
   render(){
-    const { isMobile, copyText, counter } = this.state;
+    const { isMobile, copyText, counter, counterEmail } = this.state;
     return(
       <ThemeProvider theme={theme}>
         <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
@@ -140,7 +145,7 @@ class App extends Component {
             <VideoPlayer url="reel" />
             <EmailBar copyText={copyText} theme={theme}>
               <CopiedMsgDiv>
-                <p>My email (<HueFilterSpan rotAngle={counter+120}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
+                <p>My email (<HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
               </CopiedMsgDiv>
               <div>
                 <p><HueFilterSpan rotAngle={counter+120}>👉</HueFilterSpan> I <UnderlineSpan>will</UnderlineSpan> respond to your email <HueFilterSpan rotAngle={counter+240}>👈</HueFilterSpan></p>

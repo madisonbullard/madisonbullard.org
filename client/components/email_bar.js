@@ -8,7 +8,7 @@ const EmailButton = withTheme(styled('button')`
 			props.animationStage !== 2
 			? props.theme.transitionDuration
 			: 0
-		)}ms ease;
+		)}ms cubic-bezier(.32,.01,.1,1);
 	font-size: 5vw;
 	@media (min-width: 700px){
 		font-size: 2.4rem;
@@ -20,9 +20,13 @@ const EmailButton = withTheme(styled('button')`
 		margin: 0 auto 30px;
 		width: 500px;
 		font-size: 1.6rem;
+
+		border-radius: 40px;
   }
 	background: ${props => (
 			props.animationStage == 0
+			? props.theme.color
+			: props.animationStage == 3
 			? props.theme.color
 			: props.theme.colorSelected
 		)};
