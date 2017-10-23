@@ -59,7 +59,6 @@ class EmailBar extends Component {
 	advanceAnimationStage(num){
 		const timeoutId = this.state.timeoutId[num];
 		clearTimeout(timeoutId);
-		// const newTimeoutId = setTimeout(this.setState({ animationStage: 3 }), , arguments...: any)
 		this.setState((prevState) => {
 			return({
 				animationStage: (prevState.animationStage + 1)%4
