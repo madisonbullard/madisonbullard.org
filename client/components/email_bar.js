@@ -5,7 +5,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const EmailButton = withTheme(styled('button')`
 	transition: all ${props => (
-			props.animationStage !== 2
+			props.animationStage%2 !== 0
 			? props.theme.transitionDuration
 			: 0
 		)}ms cubic-bezier(.32,.01,.1,1);
@@ -13,16 +13,15 @@ const EmailButton = withTheme(styled('button')`
 	@media (min-width: 700px){
 		font-size: 2.4rem;
   }
+	@media (orientation: landscape) {
+		font-size: 1.6rem;
+		margin: 0 auto 30px;
+		width: 500px;
+		border-radius: 40px;
+  }
 	width: 100%;
 	padding: 0;
 	height: ${props => props.theme.emailBarHeight}px;
-	@media (orientation: landscape) {
-		margin: 0 auto 30px;
-		width: 500px;
-		font-size: 1.6rem;
-
-		border-radius: 40px;
-  }
 	background: ${props => (
 			props.animationStage == 0
 			? props.theme.color
@@ -33,7 +32,6 @@ const EmailButton = withTheme(styled('button')`
 	border: 0;
 	font-family: Krungthep;
 	overflow: hidden;
-	color: #111;
 	& div {
 		width: 100%;
 		height: 100%;
@@ -47,6 +45,19 @@ const EmailButton = withTheme(styled('button')`
 				? -props.theme.emailBarHeight
 				: 0
 			)}px;
+		color: ${props => (
+				props.animationStage < 2
+			  ? props.theme.colorSelectedFont
+			  : props.theme.colorFont
+			)};
+		transition: inherit;
+	}
+	& div:nth-child(2){
+		color: ${props => (
+				props.animationStage >= 2
+			  ? props.theme.colorSelectedFont
+			  : props.theme.colorFont
+			)};
 		transition: inherit;
 	}
 	& div p {

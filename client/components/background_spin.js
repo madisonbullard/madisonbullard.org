@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-// import emojiHandhsake from '../img/handshake.png';
+import emojiHandhsake from '../img/handshake.png';
 
 const SpinContainer = styled('div')`
 	display: flex;
@@ -36,7 +36,7 @@ const SpinningImg = styled('img')`
 const BackgroundSpin = ({counter}) => {
 	return(
 		<SpinContainer>
-			<SpinningImg src={require('../img/handshake.png')} rotAngle={counter}/>
+			<SpinningImg src={ emojiHandhsake } rotAngle={counter}/>
 		</SpinContainer>
 	)
 }

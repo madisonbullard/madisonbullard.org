@@ -4,6 +4,8 @@ import { injectGlobal, fontFace } from 'emotion';
 import { ThemeProvider, withTheme } from 'emotion-theming';
 import detectIt from 'detect-it';
 
+// import Krungthep from '../fonts/krungthep.woff2';
+// import Gandur from '../fonts/gandur-regular.woff2';
 import BackgroundSpin from './background_spin';
 import AboutPanel from './about_panel';
 import VideoPlayer from './video_player';
@@ -11,7 +13,9 @@ import EmailBar from './email_bar';
 
 const theme = {
   color: "#F7F878",
-  colorSelected: "#D7F2BA",
+  colorFont: "#111",
+  colorSelected: "#222",
+  colorSelectedFont: "#22FE52",
   emailBarHeight: 75,
   transitionDuration: 600,
   alertHold: 2000
@@ -92,13 +96,12 @@ class App extends Component {
 
   componentDidMount() {
     this.checkMobile();
-    setInterval(this.timerEmail.bind(this, 'counterEmail', 16), 1000/60);
+    setInterval(this.timer.bind(this, 'counterEmail', 16), 1000/60);
   }
 
   timer(key, rate) {
     const obj = {};
     obj[key] = (this.state[key]+rate)%360;
-    console.log(obj);
     this.setState(obj);
   }
   
@@ -201,10 +204,10 @@ injectGlobal`
 `
 fontFace`
   font-family: 'Krungthep';
-  src: local('Krungthep');
+  src: local('Krungthep') url(${require('../fonts/krungthep.woff2')}) format('woff2');
 `
 fontFace`
   font-family: 'Gandur';
   font-weight: regular;
-  src: local('Gandur');
+  src: local('Gandur') url(${require('../fonts/gandur-regular.woff2')}) format('woff2');
 `
