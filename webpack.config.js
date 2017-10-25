@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const paths = {
   DIST: path.resolve(__dirname, 'dist'),
@@ -31,6 +32,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html'),
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, './client/img/ico'),
+        to: path.resolve(__dirname, './dist/images/ico'),
+      },
+    ]),
   ],
   module: {
     rules: [

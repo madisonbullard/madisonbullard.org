@@ -8,7 +8,6 @@ import detectIt from 'detect-it';
 // import Gandur from '../fonts/gandur-regular.woff2';
 import BackgroundSpin from './background_spin';
 import AboutPanel from './about_panel';
-import VideoPlayer from './video_player';
 import EmailBar from './email_bar';
 
 const theme = {
@@ -145,7 +144,6 @@ class App extends Component {
           <ContainerDiv>
             <h1>Madison Bullard</h1>
             <AboutPanel counter={counter}/>
-            <VideoPlayer url="reel" />
             <EmailBar copyText={copyText} theme={theme}>
               <CopiedMsgDiv>
                 <p>My email (<HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
