@@ -42,9 +42,15 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|gif)$/,
         use: [
-          'file-loader',
+          'file-loader?limit=1024&name=images/[name].[ext]',
+        ],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          'file-loader?limit=1024&name=fonts/[name].[ext]',
         ],
       },
     ],
