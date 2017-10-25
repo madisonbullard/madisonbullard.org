@@ -3,11 +3,15 @@ import styled from 'react-emotion';
 import emojiHandhsake from '../img/handshake.png';
 
 const SpinContainer = styled('div')`
+	position: absolute;
+	top   : 0;
+	left  : 0;
+	bottom: 0;
+	right : 0;
 	display: flex;
   align-items: center;
   justify-content: center;
 	height: 100%;
-	grid-area: 1 / 1 / -1 / -1;
   z-index: -999;
 	overflow: hidden;
 	background-color: #ddd;
