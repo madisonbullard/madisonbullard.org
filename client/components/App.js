@@ -202,10 +202,10 @@ injectGlobal`
 `
 fontFace`
   font-family: 'Krungthep';
-  src: local('Krungthep') url(${require('../fonts/krungthep.woff2')}) format('woff2');
+  src: local('Krungthep') url(https://github.com/madisonbullard/madisonbullard.github.io/blob/master/fonts/krungthep.woff2) format('woff2');
 `
 fontFace`
   font-family: 'Gandur';
   font-weight: regular;
-  src: local('Gandur') url(${require('../fonts/gandur-regular.woff2')}) format('woff2');
+  src: local('Gandur') url(https://github.com/madisonbullard/madisonbullard.github.io/blob/master/fonts/gandur-regular.woff2) format('woff2');
 `
