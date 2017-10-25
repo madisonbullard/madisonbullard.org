@@ -2,8 +2,18 @@
   "presets": [
     "env", "react"
   ],
-  "plugins": [
-    "emotion",
-    "console"
-  ]
+  "env": {
+    "production": {
+      "plugins": [
+      	["emotion", { "sourceMap": false }],
+      	"console"
+      ]
+    },
+    "development": {
+      "plugins": [
+      	["emotion", { "sourceMap": true }],
+      	"console"
+      ]
+    }
+  }
 }

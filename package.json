@@ -27,6 +27,7 @@
   "dependencies": {
     "babel-plugin-emotion": "^8.0.9",
     "detect-it": "^3.0.3",
+    "dotenv": "^4.0.0",
     "emotion": "^8.0.9",
     "emotion-theming": "^8.0.9",
     "react": "^16.0.0",
