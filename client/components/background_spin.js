@@ -15,11 +15,6 @@ const SpinContainer = styled('div')`
   z-index: -999;
 	overflow: hidden;
 	background-color: #ddd;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 `
 
@@ -31,6 +26,7 @@ const handshakeHeight = 70;
 
 const SpinningImg = styled('img')`
 	height: 100%;
+	min-height: 100%;
 	flex-shrink: 0;
 	image-rendering: pixelated;
   filter: grayscale(100%);

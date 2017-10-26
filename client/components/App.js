@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { injectGlobal, fontFace } from 'emotion';
 import { ThemeProvider, withTheme } from 'emotion-theming';
 import detectIt from 'detect-it';
@@ -9,22 +9,27 @@ import detectIt from 'detect-it';
 import BackgroundSpin from './background_spin';
 import AboutPanel from './about_panel';
 import EmailBar from './email_bar';
+import { textShadow } from './text_shadow';
 
 const theme = {
-  color: "#F7F878",
-  colorFont: "#111",
-  colorSelected: "#222",
-  colorSelectedFont: "#22FE52",
+  color: "#F7F878", //yellow
+  colorText: "#EEE",
+  colorHeader: "#CCC",
+  colorSelectedActive: "#222",
+  colorSelectedText: "#22FE52",
+  headerTextShadowForeground: "#555",
+  headerTextShadowBackground: "#999",
+  buttonTextShadowForeground: "#555",
+  buttonTextShadowBackground: "#999",
   emailBarHeight: 75,
   transitionDuration: 600,
   alertHold: 2000
 };
-
-const BodyDiv = withTheme(styled('div')`
+const BodyDiv = styled('div')`
   display: grid;
   width: 100%;
   height: 100%;
-`)
+`
 
 const ContainerDiv = styled('div')`
   grid-area: 1 / 1 / -1 / -1;
@@ -32,23 +37,23 @@ const ContainerDiv = styled('div')`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 0 auto;
   font-family: Krungthep;
   & h1 {
     text-align: center;
     width: 100%;
+    margin: auto 0;
     font-family: Gandur;
     font-weight: normal;
-    margin: 0;
-    color: ${props => theme.color};
-    background-color: #777;
+    color: ${props => theme.colorHeader};
     font-size: 96px;
+    ${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
     @media (max-width: 475px) {
-      font-size: 12.6vw;
+      font-size: 14vw;
     }
     @media (orientation: landscape) {
-      font-size: 4rem;
+      padding-top: 4vh;
     }
   }
 `
@@ -135,12 +140,11 @@ class App extends Component {
     })
   }
 
-
   render(){
     const { isMobile, copyText, counter, counterEmail } = this.state;
     return(
       <ThemeProvider theme={theme}>
-        <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null}>
+        <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null} theme={theme}>
           <ContainerDiv>
             <h1>Madison Bullard</h1>
             <AboutPanel counter={counter}/>
@@ -149,7 +153,7 @@ class App extends Component {
                 <p>My email (<HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
               </CopiedMsgDiv>
               <div>
-                <p><HueFilterSpan rotAngle={counter+120}>👉</HueFilterSpan> I <UnderlineSpan>will</UnderlineSpan> respond to your email <HueFilterSpan rotAngle={counter+240}>👈</HueFilterSpan></p>
+                <p><HueFilterSpan rotAngle={counter+120}>👉</HueFilterSpan> I will respond to your email <HueFilterSpan rotAngle={counter+240}>👈</HueFilterSpan></p>
               </div>
             </EmailBar>
           </ContainerDiv>

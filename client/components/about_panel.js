@@ -4,7 +4,7 @@ import { withTheme } from 'emotion-theming';
 
 const AboutPanelDiv = withTheme(styled('div')`
 	max-width: 900px;
-	margin: 0 auto;
+	margin: auto;
 	padding: 10px 30px;
 	& p {
     font-size: 2.8vmin;

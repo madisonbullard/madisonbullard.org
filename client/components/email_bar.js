@@ -3,31 +3,36 @@ import styled from 'react-emotion';
 import { withTheme } from 'emotion-theming';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import { textShadow } from './text_shadow';
+
 const EmailButton = withTheme(styled('button')`
 	transition: all ${props => (
 			props.animationStage%2 !== 0
 			? props.theme.transitionDuration
 			: 0
 		)}ms cubic-bezier(.32,.01,.1,1);
-	font-size: 5vw;
-	@media (min-width: 700px){
-		font-size: 2.4rem;
+	font-size: 1.6rem;
+
+	width: 500px;
+	border-radius: 40px;
+	margin: auto;
+  @media (max-width: 475px){
+	  margin: auto auto 0;
+		width: 100%;
+		padding: 0;
+		border-radius: 0px;
+		font-size: 4.7vw;
   }
 	@media (orientation: landscape) {
 		font-size: 1.6rem;
-		margin: 0 auto 30px;
-		width: 500px;
-		border-radius: 40px;
   }
-	width: 100%;
-	padding: 0;
 	height: ${props => props.theme.emailBarHeight}px;
 	background: ${props => (
 			props.animationStage == 0
 			? props.theme.color
 			: props.animationStage == 3
 			? props.theme.color
-			: props.theme.colorSelected
+			: props.theme.colorSelectedActive
 		)};
 	border: 0;
 	font-family: Krungthep;
@@ -38,6 +43,7 @@ const EmailButton = withTheme(styled('button')`
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
 	}
 	& div:first-child{
 		margin-top: ${props => (
@@ -47,16 +53,16 @@ const EmailButton = withTheme(styled('button')`
 			)}px;
 		color: ${props => (
 				props.animationStage < 2
-			  ? props.theme.colorSelectedFont
-			  : props.theme.colorFont
+			  ? props.theme.colorSelectedText
+			  : props.theme.colorText
 			)};
 		transition: inherit;
 	}
 	& div:nth-child(2){
 		color: ${props => (
 				props.animationStage >= 2
-			  ? props.theme.colorSelectedFont
-			  : props.theme.colorFont
+			  ? props.theme.colorSelectedText
+			  : props.theme.colorText
 			)};
 		transition: inherit;
 	}

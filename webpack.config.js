@@ -35,7 +35,7 @@ module.exports = (env = {}) => {
           'NODE_ENV': JSON.stringify('production')
         }
       }),
-      new MinifyPlugin(),
+      // new MinifyPlugin(),
       new HtmlWebpackPlugin({
         template: path.join(paths.SRC, 'index.html'),
       }),
