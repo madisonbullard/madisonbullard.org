@@ -9,18 +9,18 @@ import detectIt from 'detect-it';
 import BackgroundSpin from './background_spin';
 import AboutPanel from './about_panel';
 import EmailBar from './email_bar';
-import { textShadow } from './text_shadow';
+import textShadow from './text_shadow';
 
 const theme = {
-  color: "#F7F878", //yellow
+  color: "#B0F366", //green
   colorText: "#EEE",
   colorHeader: "#CCC",
-  colorSelectedActive: "#222",
-  colorSelectedText: "#22FE52",
+  colorSelectedActive: "#FFCEE3",
+  colorSelectedText: "#EEE",
   headerTextShadowForeground: "#555",
   headerTextShadowBackground: "#999",
-  buttonTextShadowForeground: "#555",
-  buttonTextShadowBackground: "#999",
+  buttonTextShadowForeground: "#350792",
+  buttonTextShadowBackground: "#A8AEC7",
   emailBarHeight: 75,
   transitionDuration: 600,
   alertHold: 2000
@@ -71,8 +71,8 @@ const CopiedMsgDiv = styled('div')`
 `
 
 const HueFilterSpan = styled('span')`
-  filter: hue-rotate(${props => props.rotAngle}deg);
-  color: red;
+  filter: hue-rotate(${props => props.rotAngle}deg) saturate(80%);
+  color: ${props => props.theme.colorSelectedActive};
 `
 
 const UnderlineSpan = styled('span')`
@@ -153,7 +153,7 @@ class App extends Component {
                 <p>My email (<HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
               </CopiedMsgDiv>
               <div>
-                <p><HueFilterSpan rotAngle={counter+120}>👉</HueFilterSpan> I will respond to your email <HueFilterSpan rotAngle={counter+240}>👈</HueFilterSpan></p>
+                <p>Get in touch!</p>
               </div>
             </EmailBar>
           </ContainerDiv>

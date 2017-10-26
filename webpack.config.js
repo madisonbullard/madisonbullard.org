@@ -6,8 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const paths = {
   DIST: path.resolve(__dirname, 'dist'),
-  SRC: path.resolve(__dirname, './client'),
-  JS: path.resolve(__dirname, './client'),
+  SRC: path.resolve(__dirname, './client')
 };
 
 module.exports = (env = {}) => {
@@ -15,7 +14,7 @@ module.exports = (env = {}) => {
   console.log('NODE_ENV: ', env.NODE_ENV) // 'local'
   console.log('Production: ', env.production) // true
   return {
-    entry: path.join(paths.JS, 'index.js'),
+    entry: path.join(paths.SRC, 'index.js'),
     output: {
       path: paths.DIST,
       filename: 'index_bundle.js'
