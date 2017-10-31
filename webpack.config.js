@@ -17,9 +17,7 @@ const getPlugins = (env = {}) => {
   // inside your code for any environment checks; UglifyJS will automatically
   // drop any unreachable code.
   plugins.push(new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': env.NODE_ENV
-      }
+      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
     }),
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html'),
@@ -33,20 +31,21 @@ const getPlugins = (env = {}) => {
   )
 
   // Conditionally add plugins for Production builds.
-  if (env.production) {
+  if (env.NODE_ENV=='production') {
+    // console.log('MINIFYYYYYY', env)
     plugins.push(new MinifyPlugin())
   }
 
   // Conditionally add plugins for Development
   else {
-
+    // console.log('NO MINIFY', env)
   }
   return plugins;
 }
 module.exports = (env = {}) => {
   // Use env.<YOUR VARIABLE> here:
-  console.log('env.NODE_ENV: ', env.NODE_ENV) // 'development'
-  console.log('process.env.NODE_ENV: ', process.env.NODE_ENV) // 'development'
+  // console.log('env.NODE_ENV: ', env.NODE_ENV) // 'development'
+  // console.log('process.env.NODE_ENV: ', process.env.NODE_ENV) // 'development'
   return {
     entry: path.join(paths.SRC, 'index.js'),
     output: {
@@ -62,7 +61,7 @@ module.exports = (env = {}) => {
       open: true,
       port: 3000
     },
-    plugins: getPlugins(),
+    plugins: getPlugins(env),
     module: {
       rules: [
         {

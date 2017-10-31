@@ -4,9 +4,9 @@
   "main": "index.js",
   "author": "",
   "scripts": {
-    "start": "webpack-dev-server --env.NODE_ENV=development",
-    "analyze": "webpack --json | webpack-bundle-size-analyzer",
-    "build": "webpack --env.NODE_ENV=production"
+    "start": "NODE_ENV=development webpack-dev-server --env.NODE_ENV=development",
+    "analyze": "NODE_ENV=production webpack --json --env.NODE_ENV=production | webpack-bundle-size-analyzer",
+    "build": "NODE_ENV=production webpack --env.NODE_ENV=production"
   },
   "license": "MIT",
   "devDependencies": {
