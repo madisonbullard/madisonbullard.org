@@ -3,52 +3,52 @@ import { css } from 'react-emotion';
 
 import textShadow from './text_shadow';
 
-const animationDriver = (props) => {
+const animationDriver = ({theme, animationStage}) => {
 	return (
 		css`
 
 			transition: all ${
-				props.animationStage%2 !== 0
-				? props.theme.transitionDuration
+				animationStage%2 !== 0
+				? theme.transitionDuration
 				: 0
 			}ms cubic-bezier(.32,.01,.1,1);
 
 			background: ${
-				props.animationStage == 0
-				? props.theme.color
-				: props.animationStage == 3
-				? props.theme.color
-				: props.theme.colorSelectedActive
+				animationStage == 0
+				? theme.color
+				: animationStage == 3
+				? theme.color
+				: theme.colorSelectedActive
 			};
 
 			& div:first-child{
 				margin-top: ${
-						props.animationStage%2 !== 1
-						? -props.theme.emailBarHeight
+						animationStage%2 !== 1
+						? -theme.emailBarHeight
 						: 0
 					}px;
 				${
-					props.animationStage < 2
-				  ? textShadow(props.theme.buttonTextShadowForeground, props.theme.buttonTextShadowBackground)
-				  : textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)
+					animationStage < 2
+				  ? textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)
+				  : textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)
 				};
 				color: ${
-						props.animationStage < 2
-					  ? props.theme.colorSelectedText
-					  : props.theme.colorText
+						animationStage < 2
+					  ? theme.colorSelectedText
+					  : theme.colorText
 					};
 			}
 
 			& div:nth-child(2){
 				color: ${
-						props.animationStage >= 2
-					  ? props.theme.colorSelectedText
-					  : props.theme.colorText
+						animationStage >= 2
+					  ? theme.colorSelectedText
+					  : theme.colorText
 					};
 				${
-					props.animationStage >= 2
-				  ? textShadow(props.theme.buttonTextShadowForeground, props.theme.buttonTextShadowBackground)
-				  : textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)
+					animationStage >= 2
+				  ? textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)
+				  : textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)
 				};
 			}
 		`

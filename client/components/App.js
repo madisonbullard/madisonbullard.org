@@ -67,12 +67,28 @@ const CopiedMsgDiv = styled('div')`
     @media (orientation: landscape) {
       font-size: 1.2rem;
     }
+    & span{
+      position: relative;
+    }
+    & span:nth-child(1){
+      z-index: 1;
+    }    
+    & span:nth-child(2){
+      z-index: 2;
+    }
+    & span:nth-child(3){
+      z-index: 3;
+    }
+    & span:nth-child(5){
+      z-index: 4;
+    }
   }
 `
 
 const HueFilterSpan = styled('span')`
   filter: hue-rotate(${props => props.rotAngle}deg) saturate(80%);
   color: ${props => props.theme.colorSelectedActive};
+  position: relative;
 `
 
 const UnderlineSpan = styled('span')`
@@ -150,7 +166,7 @@ class App extends Component {
             <AboutPanel counter={counter}/>
             <EmailBar copyText={copyText} theme={theme}>
               <CopiedMsgDiv>
-                <p>My email (<HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
+                <p><span>My email (</span><HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan><span>)</span><br /><span>has been copied to your clipboard!</span></p>
               </CopiedMsgDiv>
               <div>
                 <p>Get in touch!</p>
@@ -204,12 +220,19 @@ injectGlobal`
     box-sizing: inherit;
   }
 `
+// fontFace`
+//   font-family: 'Patrick Hand SC';
+//   font-style: normal;
+//   font-weight: 400;
+//   src: local('Patrick Hand SC'), local('PatrickHandSC-Regular'), url(https://fonts.gstatic.com/s/patrickhandsc/v4/OYFWCgfCR-7uHIovjUZXsZ71Uis0Qeb9Gqo8IZV7ckE.woff2) format('woff2');
+//   unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+// `
 fontFace`
   font-family: 'Krungthep';
-  src: local('Krungthep') url(https://dl.dropboxusercontent.com/s/5ktyvonixdtyfb3/krungthep.woff2?dl=0) format('woff2');
+  src: local('Krungthep'), url(https://dl.dropboxusercontent.com/s/5ktyvonixdtyfb3/krungthep.woff2?dl=0) format('woff2');
 `
 fontFace`
   font-family: 'Gandur';
   font-weight: regular;
-  src: local('Gandur') url(https://dl.dropboxusercontent.com/s/akqp8u5rx2j3tey/gandur-regular.woff2?dl=0) format('woff2');
+  src: local('Gandur'), url(https://dl.dropboxusercontent.com/s/akqp8u5rx2j3tey/gandur-regular.woff2?dl=0) format('woff2');
 `

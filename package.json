@@ -4,9 +4,9 @@
   "main": "index.js",
   "author": "",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --env.NODE_ENV=development",
     "analyze": "webpack --json | webpack-bundle-size-analyzer",
-    "build": "webpack"
+    "build": "webpack --env.NODE_ENV=production"
   },
   "license": "MIT",
   "devDependencies": {
@@ -27,7 +27,6 @@
   "dependencies": {
     "babel-plugin-emotion": "^8.0.9",
     "detect-it": "^3.0.3",
-    "dotenv": "^4.0.0",
     "emotion": "^8.0.9",
     "emotion-theming": "^8.0.9",
     "react": "^16.0.0",

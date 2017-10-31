@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const paths = {
@@ -9,10 +9,44 @@ const paths = {
   SRC: path.resolve(__dirname, './client')
 };
 
+
+const getPlugins = (env = {}) => {
+  let plugins = [];
+
+  // Always expose NODE_ENV to webpack, you can now use `process.env.NODE_ENV`
+  // inside your code for any environment checks; UglifyJS will automatically
+  // drop any unreachable code.
+  plugins.push(new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': env.NODE_ENV
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(paths.SRC, 'index.html'),
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, './client/img/ico'),
+        to: path.resolve(__dirname, './dist/images/ico'),
+      },
+    ])
+  )
+
+  // Conditionally add plugins for Production builds.
+  if (env.production) {
+    plugins.push(new MinifyPlugin())
+  }
+
+  // Conditionally add plugins for Development
+  else {
+
+  }
+  return plugins;
+}
 module.exports = (env = {}) => {
   // Use env.<YOUR VARIABLE> here:
-  console.log('NODE_ENV: ', env.NODE_ENV) // 'local'
-  console.log('Production: ', env.production) // true
+  console.log('env.NODE_ENV: ', env.NODE_ENV) // 'development'
+  console.log('process.env.NODE_ENV: ', process.env.NODE_ENV) // 'development'
   return {
     entry: path.join(paths.SRC, 'index.js'),
     output: {
@@ -28,23 +62,7 @@ module.exports = (env = {}) => {
       open: true,
       port: 3000
     },
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
-      }),
-      // new MinifyPlugin(),
-      new HtmlWebpackPlugin({
-        template: path.join(paths.SRC, 'index.html'),
-      }),
-      new CopyWebpackPlugin([
-        {
-          from: path.resolve(__dirname, './client/img/ico'),
-          to: path.resolve(__dirname, './dist/images/ico'),
-        },
-      ]),
-    ],
+    plugins: getPlugins(),
     module: {
       rules: [
         {
