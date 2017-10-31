@@ -47,6 +47,10 @@ class EmailBar extends Component {
 		this.state = { animationStage: 0, timeoutId: [] }
 	}
 
+	setMultipleTimeouts(timeoutDurations = []){
+		null
+	}
+
 	advanceAnimationStage(num){
 		const timeoutId = this.state.timeoutId[num];
 		clearTimeout(timeoutId);
@@ -72,8 +76,16 @@ class EmailBar extends Component {
 					() => {this.advanceAnimationStage(2)}, 
 					transitionDuration+alertHold+10+transitionDuration
 				);
+			const timeoutId3 = setTimeout(
+					() => {this.advanceAnimationStage(3)}, 
+					transitionDuration+alertHold+10+transitionDuration
+				);
+			const timeoutId4 = setTimeout(
+					() => {this.advanceAnimationStage(4)}, 
+					transitionDuration+alertHold+10+transitionDuration
+				);
 			this.setState({
-				timeoutId: [timeoutId0, timeoutId1, timeoutId2],
+				timeoutId: [timeoutId0, timeoutId1, timeoutId2, timeoutId3, timeoutId4],
 				animationStage: 1
 			});
 		}
