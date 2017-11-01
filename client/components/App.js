@@ -23,7 +23,8 @@ const theme = {
   buttonTextShadowBackground: "#A8AEC7",
   emailBarHeight: 75,
   transitionDuration: 600,
-  alertHold: 2000
+  alertHold: 2000,
+  animationRate: "cubic-bezier(.32,.01,.1,1)"
 };
 const BodyDiv = styled('div')`
   display: grid;

@@ -44,48 +44,43 @@ const EmailButton = withTheme(styled('button')`
 class EmailBar extends Component {
 	constructor(props){
 		super(props);
-		this.state = { animationStage: 0, timeoutId: [] }
+		this.state = { animationStage: 0 }
 	}
 
-	setMultipleTimeouts(timeoutDurations = []){
-		null
-	}
-
-	advanceAnimationStage(num){
-		const timeoutId = this.state.timeoutId[num];
-		clearTimeout(timeoutId);
+	incrementAnimationStage(){
+		console.log('animationStage: ', this.state.animationStage)
 		this.setState((prevState) => {
 			return({
-				animationStage: (prevState.animationStage + 1)%4
+				animationStage: (prevState.animationStage+1)%5
 			})
 		})
+		console.log('animationStage: ', this.state.animationStage)
+	}
+
+	setTimeouts(callback, times = []){
+		let totalTime = 0;
+		const internalCallback = (callback, totalTime) => {
+			setTimeout(callback, totalTime)
+		}
+		for (var time of times) {
+			totalTime = time+totalTime;
+			console.log(totalTime)
+			internalCallback(callback, totalTime)
+		}
 	}
 
 	_onClick(){
 		if (this.state.animationStage == 0){
+			console.log('animationStage: ', this.state.animationStage)
 			const { transitionDuration, alertHold } = this.props.theme;
-			const timeoutId0 = setTimeout(
-					() => {this.advanceAnimationStage(0)},
-					transitionDuration+alertHold
-				);
-			const timeoutId1 = setTimeout(
-					() => {this.advanceAnimationStage(1)}, 
-					transitionDuration+alertHold+10
-				);
-			const timeoutId2 = setTimeout(
-					() => {this.advanceAnimationStage(2)}, 
-					transitionDuration+alertHold+10+transitionDuration
-				);
-			const timeoutId3 = setTimeout(
-					() => {this.advanceAnimationStage(3)}, 
-					transitionDuration+alertHold+10+transitionDuration
-				);
-			const timeoutId4 = setTimeout(
-					() => {this.advanceAnimationStage(4)}, 
-					transitionDuration+alertHold+10+transitionDuration
-				);
+			this.setTimeouts(this.incrementAnimationStage.bind(this), 
+				[
+					1, //set animationStage: 2; immediately append hidden div above clicked div
+					transitionDuration+alertHold, //set animationStage: 3;
+					10, //set animationStage: 4;
+					transitionDuration //set aniationStage: 0;
+				])
 			this.setState({
-				timeoutId: [timeoutId0, timeoutId1, timeoutId2, timeoutId3, timeoutId4],
 				animationStage: 1
 			});
 		}
@@ -97,7 +92,11 @@ class EmailBar extends Component {
 		return(
 			<CopyToClipboard text={copyText}>
 				<EmailButton onClick={this._onClick.bind(this)} animationStage={animationStage}>
-					{animationStage >= 2 ? React.Children.toArray(children).reverse() : children}
+					{animationStage == 0 
+						? React.Children.toArray(children)[1]
+						: animationStage >= 3 
+						? React.Children.toArray(children).reverse() 
+						: children}
 				</EmailButton>
 			</CopyToClipboard>
 		)
