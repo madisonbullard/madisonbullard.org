@@ -31,6 +31,9 @@ const SpinningImg = styled('img')`
 	image-rendering: pixelated;
   filter: grayscale(100%);
   -webkit-transform: translateY(${props => Math.sin(degToRad(props.rotAngle)) * handshakeHeight}px);
+  @media (max-width: 500px){
+	  opacity: 0.4;
+  }
 `
 
 const BackgroundSpin = ({counter}) => {

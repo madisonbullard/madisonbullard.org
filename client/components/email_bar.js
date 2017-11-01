@@ -14,11 +14,10 @@ const EmailButton = withTheme(styled('button')`
 	margin: auto;
 	padding: 0;
   @media (max-width: 500px){
-	  margin: auto auto 0;
-		width: 100%;
+	  margin: auto 8px 8px;
+		width: auto;
 		padding: 0;
-		border-radius: 0px;
-		font-size: 4.7vw;
+		font-size: 4.2vw;
   }
 	@media (orientation: landscape) {
 		font-size: 1.6rem;
@@ -48,13 +47,11 @@ class EmailBar extends Component {
 	}
 
 	incrementAnimationStage(){
-		console.log('animationStage: ', this.state.animationStage)
 		this.setState((prevState) => {
 			return({
 				animationStage: (prevState.animationStage+1)%5
 			})
 		})
-		console.log('animationStage: ', this.state.animationStage)
 	}
 
 	setTimeouts(callback, times = []){
@@ -64,14 +61,12 @@ class EmailBar extends Component {
 		}
 		for (var time of times) {
 			totalTime = time+totalTime;
-			console.log(totalTime)
 			internalCallback(callback, totalTime)
 		}
 	}
 
 	_onClick(){
 		if (this.state.animationStage == 0){
-			console.log('animationStage: ', this.state.animationStage)
 			const { transitionDuration, alertHold } = this.props.theme;
 			this.setTimeouts(this.incrementAnimationStage.bind(this), 
 				[

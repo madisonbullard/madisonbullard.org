@@ -5,19 +5,19 @@ import { withTheme } from 'emotion-theming';
 const AboutPanelDiv = withTheme(styled('div')`
 	max-width: 900px;
 	margin: auto;
-	padding: 10px 30px;
+	padding: 10px 20px;
 	& p {
     font-size: 2.8vmin;
     @media (max-width: 1200px) {
       font-size: 2.8vmax;
     }
     @media (max-width: 900px) {
-      font-size: 4.7vw;
+      font-size: 4.2vw;
     }
     @media (max-height: 520px) {
       font-size: 4vw;
     }
-    margin: 16px 0;
+    margin: 14px 0;
     color: #444;
     & a {
       color: #333;
