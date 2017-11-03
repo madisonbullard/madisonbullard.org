@@ -108,34 +108,26 @@ class App extends Component {
   }
 
   checkMobile() {
+    let intervalId = null;
     if (detectIt.hasMouse){
       this.setState({isMobile: false})
+      intervalId = setInterval(this.timer.bind(this, 'counterEmail', 16), 1000/60);
     }else{
       this.setState({isMobile: true})
+      intervalId = setInterval(this.timer.bind(this, 'counter', 8), 1000/30);
     }
+    // store intervalId in the state so it can be accessed later:
+    this.setState({intervalId: intervalId})
   }
 
   componentDidMount() {
     this.checkMobile();
-    setInterval(this.timer.bind(this, 'counterEmail', 16), 1000/60);
   }
 
   timer(key, rate) {
     const obj = {};
     obj[key] = (this.state[key]+rate)%360;
     this.setState(obj);
-  }
-  
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.isMobile!==this.state.isMobile) {
-      if (nextState.isMobile) {
-        const intervalId = setInterval(this.timer.bind(this, 'counter', 4), 1000/60);
-        // store intervalId in the state so it can be accessed later:
-        this.setState({intervalId: intervalId})
-      } else {
-        clearInterval(this.state.intervalId);
-      }
-    }
   }
   
   componentWillUnmount() {
@@ -161,20 +153,20 @@ class App extends Component {
     const { isMobile, copyText, counter, counterEmail } = this.state;
     return(
       <ThemeProvider theme={theme}>
-        <BodyDiv onMouseMove={!isMobile ? this._onMouseMove.bind(this) : null} theme={theme}>
-          <ContainerDiv>
-            <h1>Madison Bullard</h1>
-            <AboutPanel counter={counter}/>
-            <EmailBar copyText={copyText} theme={theme}>
-              <CopiedMsgDiv>
-                <p><span>My email (</span><HueFilterSpan rotAngle={counterEmail}>{copyText}</HueFilterSpan><span>)</span><br /><span>has been copied to your clipboard!</span></p>
-              </CopiedMsgDiv>
-              <div>
-                <p>Get in touch!</p>
-              </div>
-            </EmailBar>
-          </ContainerDiv>
-          <BackgroundSpin counter={this.state.counter}/>
+        <BodyDiv onMouseMove={isMobile ? null : this._onMouseMove.bind(this)} theme={theme}>
+            <ContainerDiv>
+              <h1>Madison Bullard</h1>
+              <AboutPanel counter={counter}/>
+              <EmailBar copyText={copyText} theme={theme}>
+                <CopiedMsgDiv>
+                  <p><span>My email (</span><HueFilterSpan rotAngle={isMobile ? counter*4 : counterEmail}>{copyText}</HueFilterSpan><span>)</span><br /><span>has been copied to your clipboard!</span></p>
+                </CopiedMsgDiv>
+                <div>
+                  <p>Get in touch!</p>
+                </div>
+              </EmailBar>
+            </ContainerDiv>
+            <BackgroundSpin counter={counter} isMobile={isMobile}/>
         </BodyDiv>
       </ThemeProvider>
     )
@@ -185,21 +177,6 @@ export default App
 
 injectGlobal`
   html, body, #root {
-    font-family: -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      "Roboto",
-      "Roboto Light",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-      sans-serif,
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
-      "Segoe UI Symbol";
     width: 100%;
     height: 100%;
     padding: 0;
@@ -211,23 +188,12 @@ injectGlobal`
     }
   }
   html {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
   *, *:before, *:after {
-    -webkit-box-sizing: inherit;
-    -moz-box-sizing: inherit;
     box-sizing: inherit;
   }
 `
-// fontFace`
-//   font-family: 'Patrick Hand SC';
-//   font-style: normal;
-//   font-weight: 400;
-//   src: local('Patrick Hand SC'), local('PatrickHandSC-Regular'), url(https://fonts.gstatic.com/s/patrickhandsc/v4/OYFWCgfCR-7uHIovjUZXsZ71Uis0Qeb9Gqo8IZV7ckE.woff2) format('woff2');
-//   unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-// `
 fontFace`
   font-family: 'Krungthep';
   src: local('Krungthep'), url(https://dl.dropboxusercontent.com/s/5ktyvonixdtyfb3/krungthep.woff2?dl=0) format('woff2');

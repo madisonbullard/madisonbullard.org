@@ -9,9 +9,9 @@ const animationDriver = ({theme, animationStage}) => {
 			css`
 				transition: all 0ms ${theme.animationRate};
 				background: ${theme.color};
+				transform: translateY(0px);
 				& div:first-child{
 					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
-					margin-top: 0px;
 					color: ${theme.colorSelectedText};
 				}
 			`)
@@ -19,9 +19,10 @@ const animationDriver = ({theme, animationStage}) => {
 			css`
 				transition: all 0ms ${theme.animationRate};
 				background: ${theme.color};
+				
+				transform: translateY(${-theme.emailBarHeight/2}px);
 				& div:first-child{
 					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
-					margin-top: ${-theme.emailBarHeight}px;
 					color: ${theme.colorSelectedText};
 				}
 				& div:nth-child(2){
@@ -33,9 +34,10 @@ const animationDriver = ({theme, animationStage}) => {
 			css`
 				transition: all ${theme.transitionDuration}ms ${theme.animationRate};
 				background: ${theme.colorSelectedActive};
+				
+				transform: translateY(0px);
 				& div:first-child{
 					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
-					margin-top: 0px;
 					color: ${theme.colorSelectedText};
 				}
 				& div:nth-child(2){
@@ -47,9 +49,10 @@ const animationDriver = ({theme, animationStage}) => {
 			css`
 				transition: all 0ms ${theme.animationRate};
 				background: ${theme.colorSelectedActive};
+				
+				transform: translateY(${-theme.emailBarHeight/2}px);
 				& div:first-child{
 					${textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
-					margin-top: ${-theme.emailBarHeight}px;
 					color: ${theme.colorText};
 				}
 				& div:nth-child(2){
@@ -61,9 +64,10 @@ const animationDriver = ({theme, animationStage}) => {
 			css`
 				transition: all ${theme.transitionDuration}ms ${theme.animationRate};
 				background: ${theme.color};
+				
+				transform: translateY(0px);
 				& div:first-child{
 					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
-					margin-top: 0px;
 					color: ${theme.colorText};
 				}
 				& div:nth-child(2){

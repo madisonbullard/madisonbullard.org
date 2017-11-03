@@ -7,7 +7,6 @@ import textShadow from './text_shadow';
 import animationDriver from './animation_driver';
 
 const EmailButton = withTheme(styled('button')`
-	${props => animationDriver(props)};
 	font-size: 1.6rem;
 	width: 500px;
 	border-radius: 10px;
@@ -27,16 +26,21 @@ const EmailButton = withTheme(styled('button')`
 	font-family: Krungthep;
 	overflow: hidden;
 	& div {
-		transition: inherit;
+		${props => animationDriver(props)};
 		width: 100%;
 		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
-	}
-	& div p {
-		margin: 0;
+		& div {
+			transition: inherit;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
+			& p {
+				margin: 0;
+			}
+		}
 	}
 `)
 
@@ -87,11 +91,13 @@ class EmailBar extends Component {
 		return(
 			<CopyToClipboard text={copyText}>
 				<EmailButton onClick={this._onClick.bind(this)} animationStage={animationStage}>
-					{animationStage == 0 
-						? React.Children.toArray(children)[1]
-						: animationStage >= 3 
-						? React.Children.toArray(children).reverse() 
-						: children}
+					<div>
+						{animationStage == 0 
+							? React.Children.toArray(children)[1]
+							: animationStage >= 3 
+							? React.Children.toArray(children).reverse() 
+							: children}
+					</div>
 				</EmailButton>
 			</CopyToClipboard>
 		)
