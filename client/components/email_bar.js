@@ -36,7 +36,6 @@ const EmailButton = withTheme(styled('button')`
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
 			& p {
 				margin: 0;
 			}

@@ -1,17 +1,18 @@
 import React from 'react';
 import { css } from 'react-emotion';
 
-import textShadow from './text_shadow';
-
 const animationDriver = ({theme, animationStage}) => {
 	switch (animationStage) {
 		case 0: return (
 			css`
 				transition: all 0ms ${theme.animationRate};
 				background: ${theme.color};
+				&:hover {
+					transition: all ${theme.transitionDuration}ms ease;
+					background: ${theme.colorHover};
+				}
 				transform: translateY(0px);
 				& div:first-child{
-					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
 					color: ${theme.colorSelectedText};
 				}
 			`)
@@ -22,12 +23,10 @@ const animationDriver = ({theme, animationStage}) => {
 				
 				transform: translateY(${-theme.emailBarHeight/2}px);
 				& div:first-child{
-					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
 					color: ${theme.colorSelectedText};
 				}
 				& div:nth-child(2){
 					color: ${theme.colorText};
-					${textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
 				}
 			`)
 		case 2: return (
@@ -37,12 +36,10 @@ const animationDriver = ({theme, animationStage}) => {
 				
 				transform: translateY(0px);
 				& div:first-child{
-					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
 					color: ${theme.colorSelectedText};
 				}
 				& div:nth-child(2){
 					color: ${theme.colorText};
-					${textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
 				}
 			`)
 		case 3: return (
@@ -52,12 +49,10 @@ const animationDriver = ({theme, animationStage}) => {
 				
 				transform: translateY(${-theme.emailBarHeight/2}px);
 				& div:first-child{
-					${textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
 					color: ${theme.colorText};
 				}
 				& div:nth-child(2){
 					color: ${theme.colorSelectedText};
-					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
 				}
 			`)
 		case 4: return (
@@ -67,12 +62,10 @@ const animationDriver = ({theme, animationStage}) => {
 				
 				transform: translateY(0px);
 				& div:first-child{
-					${textShadow(theme.buttonTextShadowForeground, theme.buttonTextShadowBackground)};
 					color: ${theme.colorText};
 				}
 				& div:nth-child(2){
 					color: ${theme.colorSelectedText};
-					${textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
 				}
 			`)
 	}

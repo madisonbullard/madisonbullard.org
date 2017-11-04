@@ -4,19 +4,19 @@ import { injectGlobal, fontFace } from 'emotion';
 import { ThemeProvider, withTheme } from 'emotion-theming';
 import detectIt from 'detect-it';
 
-// import Krungthep from '../fonts/krungthep.woff2';
-// import Gandur from '../fonts/gandur-regular.woff2';
 import BackgroundSpin from './background_spin';
 import AboutPanel from './about_panel';
 import EmailBar from './email_bar';
 import textShadow from './text_shadow';
 
 const theme = {
-  color: "#B0F366", //green
+  color: "#7ACED6", //green
+  colorHover: "#64B2C8",
   colorText: "#EEE",
   colorHeader: "#CCC",
-  colorSelectedActive: "#FFCEE3",
+  colorSelectedActive: "#131B43",
   colorSelectedText: "#EEE",
+  colorSelectedTextHueRotate: "#64B2C8",
   headerTextShadowForeground: "#555",
   headerTextShadowBackground: "#999",
   buttonTextShadowForeground: "#350792",
@@ -88,7 +88,7 @@ const CopiedMsgDiv = styled('div')`
 
 const HueFilterSpan = styled('span')`
   filter: hue-rotate(${props => props.rotAngle}deg) saturate(80%);
-  color: ${props => props.theme.colorSelectedActive};
+  color: ${props => props.theme.colorSelectedTextHueRotate};
   position: relative;
 `
 
