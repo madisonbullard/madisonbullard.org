@@ -9,7 +9,6 @@ const paths = {
   SRC: path.resolve(__dirname, './client')
 };
 
-
 const getPlugins = (env = {}) => {
   let plugins = [];
 
@@ -42,6 +41,7 @@ const getPlugins = (env = {}) => {
   }
   return plugins;
 }
+
 module.exports = (env = {}) => {
   // Use env.<YOUR VARIABLE> here:
   // console.log('env.NODE_ENV: ', env.NODE_ENV) // 'development'

@@ -26,7 +26,6 @@ const upDown = keyframes`
 const handshakeHeight = 60;
 
 const handshakeAnimation = ({isMobile, rotAngle}) => {
-	console.log(isMobile)
 	if (isMobile) {
 		return css`
 			animation: ${upDown} 1.5s alternate infinite ease-in-out;

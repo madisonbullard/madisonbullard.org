@@ -13,7 +13,7 @@ const animationDriver = ({theme, animationKeyframe}) => {
 				}
 				transform: translateY(0px);
 				& div:first-child{
-					color: ${theme.colorSelectedText};
+					color: ${theme.colorText};
 				}
 			`)
 		case 1: return (

@@ -12,6 +12,8 @@ const EmailButton = withTheme(styled('button')`
 	border-radius: 10px;
 	margin: auto;
 	padding: 0;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
   @media (max-width: 500px){
 	  margin: auto 8px 8px;
 		width: auto;

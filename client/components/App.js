@@ -10,9 +10,9 @@ import EmailBar from './email_bar';
 import textShadow from './text_shadow';
 
 const theme = {
-  color: "#7ACED6", //green
-  colorHover: "#64B2C8",
-  colorText: "#EEE",
+  color: "#EAFF55", //green
+  colorHover: "#CFFF55",
+  colorText: "#444",
   colorHeader: "#CCC",
   colorSelectedActive: "#131B43",
   colorSelectedText: "#EEE",
@@ -25,16 +25,10 @@ const theme = {
   transitionDuration: 600,
   alertHold: 2000,
   animationRate: "cubic-bezier(.32,.01,.1,1)",
-  lineHeight: "\\\\\\]\
+  lineHeight: "1.8rem",
+  lineHeightMobile: "1.3rem"
+}
 
-
-
-
-
-  "''''''''''''''''''
-  S;;;fhgmKI''''''''''''''''''''W==================================================================================================================================================================================================================================================================================================0-E'"
-&G   Vrem"
-};
 const BodyDiv = styled('div')`
   display: grid;
   width: 100%;
@@ -58,7 +52,7 @@ const ContainerDiv = styled('div')`
     font-weight: normal;
     color: ${props => theme.colorHeader};
     font-size: 96px;
-    ${props => textShadow(props.theme.headerTextShadowForeground, props.theme.headerTextShadowBackground)};
+    ${props => textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
     @media (max-width: 475px) {
       font-size: 14vw;
     }
@@ -70,36 +64,20 @@ const ContainerDiv = styled('div')`
 
 const CopiedMsgDiv = styled('div')`
   & p {
-
     font-size: 1.3rem;
-    line-height: ${props => theme.lineHeight};
+    line-height: ${props => props.isMobile ? theme.lineHeightMobile : theme.lineHeight };
     @media (max-width: 475px){
       font-size: 4.3vw;
     }
     @media (orientation: landscape) {
       font-size: 1.2rem;
     }
-    & span{
-      position: relative;
-    }
-    & span:nth-child(1){
-      z-index: 1;
-    }    
-    & span:nth-child(2){
-      z-index: 2;
-    }
-    & span:nth-child(3){
-      z-index: 3;
-    }
-    & span:nth-child(5){
-      z-index: 4;
-    }
   }
 `
 
 const HueFilterSpan = styled('span')`
   filter: hue-rotate(${props => props.rotAngle}deg) saturate(80%);
-  color: ${props => props.theme.colorSelectedTextHueRotate};
+  color: ${props => theme.colorSelectedTextHueRotate};
   position: relative;
 `
 
@@ -170,7 +148,7 @@ class App extends Component {
               <AboutPanel counter={counter}/>
               <EmailBar copyText={copyText} theme={theme}>
                 <CopiedMsgDiv>
-                  <p><span>My email (</span><HueFilterSpan rotAngle={isMobile ? counter*4 : counterEmail}>{copyText}</HueFilterSpan><span>)</span><br /><span>has been copied to your clipboard!</span></p>
+                  <p>My email (<HueFilterSpan rotAngle={isMobile ? counter*4 : counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
                 </CopiedMsgDiv>
                 <div>
                   <p>Get in touch!</p>
