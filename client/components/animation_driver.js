@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from 'react-emotion';
 
-const animationDriver = ({theme, animationStage}) => {
-	switch (animationStage) {
+const animationDriver = ({theme, animationKeyframe}) => {
+	switch (animationKeyframe) {
 		case 0: return (
 			css`
 				transition: all 0ms ${theme.animationRate};

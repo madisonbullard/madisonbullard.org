@@ -24,7 +24,16 @@ const theme = {
   emailBarHeight: 75,
   transitionDuration: 600,
   alertHold: 2000,
-  animationRate: "cubic-bezier(.32,.01,.1,1)"
+  animationRate: "cubic-bezier(.32,.01,.1,1)",
+  lineHeight: "\\\\\\]\
+
+
+
+
+
+  "''''''''''''''''''
+  S;;;fhgmKI''''''''''''''''''''W==================================================================================================================================================================================================================================================================================================0-E'"
+&G   Vrem"
 };
 const BodyDiv = styled('div')`
   display: grid;
@@ -61,7 +70,9 @@ const ContainerDiv = styled('div')`
 
 const CopiedMsgDiv = styled('div')`
   & p {
+
     font-size: 1.3rem;
+    line-height: ${props => theme.lineHeight};
     @media (max-width: 475px){
       font-size: 4.3vw;
     }

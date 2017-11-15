@@ -46,13 +46,13 @@ const EmailButton = withTheme(styled('button')`
 class EmailBar extends Component {
 	constructor(props){
 		super(props);
-		this.state = { animationStage: 0 }
+		this.state = { animationKeyframe: 0 }
 	}
 
-	incrementAnimationStage(){
+	incrementAnimationKeyframe(){
 		this.setState((prevState) => {
 			return({
-				animationStage: (prevState.animationStage+1)%5
+				animationKeyframe: (prevState.animationKeyframe+1)%5
 			})
 		})
 	}
@@ -69,31 +69,31 @@ class EmailBar extends Component {
 	}
 
 	_onClick(){
-		if (this.state.animationStage == 0){
+		if (this.state.animationKeyframe == 0){
 			const { transitionDuration, alertHold } = this.props.theme;
-			this.setTimeouts(this.incrementAnimationStage.bind(this), 
+			this.setTimeouts(this.incrementAnimationKeyframe.bind(this), 
 				[
-					1, //set animationStage: 2; immediately append hidden div above clicked div
-					transitionDuration+alertHold, //set animationStage: 3;
-					10, //set animationStage: 4;
-					transitionDuration //set aniationStage: 0;
+					1, //set animationKeyframe: 2; immediately append hidden div above clicked div
+					transitionDuration+alertHold, //set animationKeyframe: 3;
+					10, //set animationKeyframe: 4;
+					transitionDuration //set animationKeyframe: 0;
 				])
 			this.setState({
-				animationStage: 1
+				animationKeyframe: 1
 			});
 		}
 	}
 
 	render(){
 		const { children, copyText } = this.props;
-		const { animationStage } = this.state;
+		const { animationKeyframe } = this.state;
 		return(
 			<CopyToClipboard text={copyText}>
-				<EmailButton onClick={this._onClick.bind(this)} animationStage={animationStage}>
+				<EmailButton onClick={this._onClick.bind(this)} animationKeyframe={animationKeyframe}>
 					<div>
-						{animationStage == 0 
+						{animationKeyframe == 0 
 							? React.Children.toArray(children)[1]
-							: animationStage >= 3 
+							: animationKeyframe >= 3 
 							? React.Children.toArray(children).reverse() 
 							: children}
 					</div>
