@@ -10,7 +10,7 @@ import EmailBar from './email_bar';
 import textShadow from './text_shadow';
 
 const theme = {
-  color: "#EAFF55", //green
+  color: "#E8FF67", //green
   colorHover: "#CFFF55",
   colorText: "#444",
   colorHeader: "#CCC",
