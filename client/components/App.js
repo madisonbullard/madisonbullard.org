@@ -123,7 +123,6 @@ class App extends Component {
     clearInterval(this.state.intervalId);
   }
 
-
   _onMouseMove(e) {
     e.persist();
     this.setState((prevState, props) => {
