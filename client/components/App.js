@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import styled, { css } from 'react-emotion';
-import { injectGlobal, fontFace } from 'emotion';
-import { ThemeProvider, withTheme } from 'emotion-theming';
-import detectIt from 'detect-it';
+import React, { Component } from "react";
+import styled, { css } from "react-emotion";
+import { injectGlobal, fontFace } from "emotion";
+import { ThemeProvider, withTheme } from "emotion-theming";
+import detectIt from "detect-it";
 
-import BackgroundSpin from './background_spin';
-import AboutPanel from './about_panel';
-import EmailBar from './email_bar';
-import textShadow from './text_shadow';
+import BackgroundSpin from "./background_spin";
+import AboutPanel from "./about_panel";
+import EmailBar from "./email_bar";
+import textShadow from "./text_shadow";
 
 const theme = {
   color: "#E8FF67", //green
@@ -27,15 +27,15 @@ const theme = {
   animationRate: "cubic-bezier(.32,.01,.1,1)",
   lineHeight: "1.8rem",
   lineHeightMobile: "1.3rem"
-}
+};
 
-const BodyDiv = styled('div')`
+const BodyDiv = styled("div")`
   display: grid;
   width: 100%;
   height: 100%;
-`
+`;
 
-const ContainerDiv = styled('div')`
+const ContainerDiv = styled("div")`
   grid-area: 1 / 1 / -1 / -1;
   width: 100%;
   height: 100%;
@@ -52,7 +52,11 @@ const ContainerDiv = styled('div')`
     font-weight: normal;
     color: ${props => theme.colorHeader};
     font-size: 96px;
-    ${props => textShadow(theme.headerTextShadowForeground, theme.headerTextShadowBackground)};
+    ${props =>
+      textShadow(
+        theme.headerTextShadowForeground,
+        theme.headerTextShadowBackground
+      )};
     @media (max-width: 475px) {
       font-size: 14vw;
     }
@@ -60,37 +64,39 @@ const ContainerDiv = styled('div')`
       padding-top: 4vh;
     }
   }
-`
+`;
 
-const CopiedMsgDiv = styled('div')`
+const CopiedMsgDiv = styled("div")`
   & p {
     font-size: 1.3rem;
-    line-height: ${props => props.isMobile ? theme.lineHeightMobile : theme.lineHeight };
-    @media (max-width: 475px){
+    line-height: ${props =>
+      props.isMobile ? theme.lineHeightMobile : theme.lineHeight};
+    @media (max-width: 475px) {
       font-size: 4.3vw;
     }
     @media (orientation: landscape) {
       font-size: 1.2rem;
     }
   }
-`
+`;
 
-const HueFilterSpan = styled('span')`
+const HueFilterSpan = styled("span")`
   filter: hue-rotate(${props => props.rotAngle}deg) saturate(80%);
   color: ${props => theme.colorSelectedTextHueRotate};
   position: relative;
-`
+`;
 
-const UnderlineSpan = styled('span')`
+const UnderlineSpan = styled("span")`
   text-decoration: underline;
-`
+`;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      x: 0, y: 0, 
-      copyText: 'madison.bullard@gmail.com',
+    this.state = {
+      x: 0,
+      y: 0,
+      copyText: "madison.bullard@gmail.com",
       counter: 0,
       counterEmail: 0
     };
@@ -98,15 +104,18 @@ class App extends Component {
 
   checkMobile() {
     let intervalId = null;
-    if (detectIt.hasMouse){
-      this.setState({isMobile: false})
-      intervalId = setInterval(this.timer.bind(this, 'counterEmail', 16), 1000/60);
-    }else{
-      this.setState({isMobile: true})
-      intervalId = setInterval(this.timer.bind(this, 'counter', 8), 1000/30);
+    if (detectIt.hasMouse) {
+      this.setState({ isMobile: false });
+      intervalId = setInterval(
+        this.timer.bind(this, "counterEmail", 16),
+        1000 / 60
+      );
+    } else {
+      this.setState({ isMobile: true });
+      intervalId = setInterval(this.timer.bind(this, "counter", 8), 1000 / 30);
     }
     // store intervalId in the state so it can be accessed later:
-    this.setState({intervalId: intervalId})
+    this.setState({ intervalId: intervalId });
   }
 
   componentDidMount() {
@@ -115,10 +124,10 @@ class App extends Component {
 
   timer(key, rate) {
     const obj = {};
-    obj[key] = (this.state[key]+rate)%360;
+    obj[key] = (this.state[key] + rate) % 360;
     this.setState(obj);
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.state.intervalId);
   }
@@ -127,41 +136,54 @@ class App extends Component {
     e.persist();
     this.setState((prevState, props) => {
       const { x, y } = this.state;
-      const increment = Math.abs(e.screenX-prevState.x) + Math.abs(e.screenY-prevState.y);
+      const increment =
+        Math.abs(e.screenX - prevState.x) + Math.abs(e.screenY - prevState.y);
       const rate = 0.4;
-      return ({
-        counter: (prevState.counter+increment*rate)%360,
-        x: e.screenX, 
-        y: e.screenY 
-      })
-    })
+      return {
+        counter: (prevState.counter + increment * rate) % 360,
+        x: e.screenX,
+        y: e.screenY
+      };
+    });
   }
 
-  render(){
+  render() {
     const { isMobile, copyText, counter, counterEmail } = this.state;
-    return(
+    return (
       <ThemeProvider theme={theme}>
-        <BodyDiv onMouseMove={isMobile ? null : this._onMouseMove.bind(this)} theme={theme}>
-            <ContainerDiv>
-              <h1>Madison Bullard</h1>
-              <AboutPanel counter={counter}/>
-              <EmailBar copyText={copyText} theme={theme}>
-                <CopiedMsgDiv>
-                  <p>My email (<HueFilterSpan rotAngle={isMobile ? counter*4 : counterEmail}>{copyText}</HueFilterSpan>)<br />has been copied to your clipboard!</p>
-                </CopiedMsgDiv>
-                <div>
-                  <p>Get in touch!</p>
-                </div>
-              </EmailBar>
-            </ContainerDiv>
-            <BackgroundSpin counter={counter} isMobile={isMobile}/>
+        <BodyDiv
+          onMouseMove={isMobile ? null : this._onMouseMove.bind(this)}
+          theme={theme}
+        >
+          <ContainerDiv>
+            <h1>Madison Bullard</h1>
+            <AboutPanel counter={counter} />
+            <EmailBar copyText={copyText} theme={theme}>
+              <CopiedMsgDiv>
+                <p>
+                  My email (
+                  <HueFilterSpan
+                    rotAngle={isMobile ? counter * 4 : counterEmail}
+                  >
+                    {copyText}
+                  </HueFilterSpan>
+                  )<br />
+                  has been copied to your clipboard!
+                </p>
+              </CopiedMsgDiv>
+              <div>
+                <p>Get in touch!</p>
+              </div>
+            </EmailBar>
+          </ContainerDiv>
+          <BackgroundSpin counter={counter} isMobile={isMobile} />
         </BodyDiv>
       </ThemeProvider>
-    )
+    );
   }
 }
 
-export default App
+export default App;
 
 injectGlobal`
   html, body, #root {
@@ -181,13 +203,13 @@ injectGlobal`
   *, *:before, *:after {
     box-sizing: inherit;
   }
-`
+`;
 fontFace`
   font-family: 'Krungthep';
   src: local('Krungthep'), url(https://dl.dropboxusercontent.com/s/5ktyvonixdtyfb3/krungthep.woff2?dl=0) format('woff2');
-`
+`;
 fontFace`
   font-family: 'Gandur';
   font-weight: regular;
   src: local('Gandur'), url(https://dl.dropboxusercontent.com/s/akqp8u5rx2j3tey/gandur-regular.woff2?dl=0) format('woff2');
-`
+`;
