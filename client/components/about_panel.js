@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "react-emotion";
 import { withTheme } from "emotion-theming";
 
@@ -27,10 +27,6 @@ const AboutPanelDiv = withTheme(styled("div")`
     }
   }
 `);
-
-// const HueFilterSpan = styled('span')`
-// 	filter: hue-rotate(${props => props.rotAngle}deg);
-// `
 
 const AboutPanel = () => {
   return (
